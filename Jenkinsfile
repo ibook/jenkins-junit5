@@ -43,7 +43,8 @@ pipeline {
                 // sh 'make test' // make 示例
               	sh './gradlew test'
                 echo "单元测试完成."
-                junit 'target/surefire-reports/*.xml' // 收集单元测试报告的调用过程
+                //junit 'target/surefire-reports/*.xml' // 收集单元测试报告的调用过程
+              	junit 'build/test-results/test/*.xml'
             }
         }
 
