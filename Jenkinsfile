@@ -41,7 +41,7 @@ pipeline {
                 // 请在这里放置您项目代码的单元测试调用过程，例如:
                 // sh 'mvn test' // mvn 示例
                 // sh 'make test' // make 示例
-              	sh 'gradlew test'
+              	sh './gradlew test'
                 echo "单元测试完成."
                 junit 'target/surefire-reports/*.xml' // 收集单元测试报告的调用过程
             }
