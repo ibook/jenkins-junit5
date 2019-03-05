@@ -12,6 +12,7 @@ plugins {
     // id 'java'
     id 'eclipse' // optional (to generate Eclipse project files)
 	id 'idea' // optional (to generate IntelliJ IDEA project files)
+	id 'jacoco'
 }
 
 repositories {
@@ -43,9 +44,18 @@ dependencies {
 	
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'demo.Test'
+        attributes 'Class-Path': 'junit5.jar'
+    }
+}
+
 test {
 	useJUnitPlatform()
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
 }
+
+test.finalizedBy(project.tasks.jacocoTestReport)

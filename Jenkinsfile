@@ -16,35 +16,24 @@ pipeline {
                 )
             }
         }
-
-        stage("构建") {
-            steps {
-                echo "构建中..."
-                sh 'go version'
-                sh 'node -v'
-                sh 'java -version'
-                sh 'php -v'
-                sh 'python -V'
-                sh 'gcc -v'
-                sh 'make -v'
-                // 请在这里放置您项目代码的单元测试调用过程，例如:
-                // sh 'mvn package' // mvn 示例
-                // sh 'make' // make 示例
-                echo "构建完成."
-                // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true // 收集构建产物
-            }
-        }
-
         stage("测试") {
             steps {
                 echo "单元测试中..."
                 // 请在这里放置您项目代码的单元测试调用过程，例如:
-                // sh 'mvn test' // mvn 示例
-                // sh 'make test' // make 示例
               	sh './gradlew test'
                 echo "单元测试完成."
-                //junit 'target/surefire-reports/*.xml' // 收集单元测试报告的调用过程
+                // 收集单元测试报告的调用过程
               	junit 'build/test-results/test/*.xml'
+            }
+        }
+        
+        stage("构建") {
+            steps {
+                echo "构建中..."
+                sh './gradlew build'
+                echo "构建完成."
+                // 收集构建产物
+                archiveArtifacts artifacts: 'build/**/*.jar', fingerprint: true 
             }
         }
 
